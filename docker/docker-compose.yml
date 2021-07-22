@@ -1,0 +1,18 @@
+version: "3"
+services:
+  webserver:
+    image: nginx:alpine
+    volumes:
+      - ./../:/var/www/panther/current/backend/:cached
+      - ./nginx:/etc/nginx/conf.d
+    ports:
+      - 5501:80
+    depends_on:
+      - php-fpm
+
+  php-fpm:
+    build: php-fpm
+    environment:
+      - APP_ENV=dev
+    volumes:
+      - ./../:/var/www/panther/current/backend/:cached
